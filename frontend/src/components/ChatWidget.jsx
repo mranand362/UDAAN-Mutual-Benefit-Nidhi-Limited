@@ -184,7 +184,7 @@ const ChatWidget = () => {
             setIsOpen(true);
             setUnreadCount(0);
           }}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-[#FDB813] to-[#fec84d] text-[#0B2A4A] rounded-full shadow-2xl hover:shadow-xl transition-all duration-300 flex items-center justify-center group active:scale-95"
+          className="fixed bottom-16 right-4 sm:bottom-6 sm:right-6 z-50 w-8 h-8 sm:w-16 sm:h-16 bg-gradient-to-r from-[#FDB813] to-[#fec84d] text-[#0B2A4A] rounded-full shadow-2xl hover:shadow-xl transition-all duration-300 flex items-center justify-center group active:scale-95"
         >
           <div className="relative">
             <MessageCircle size={24} className="sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />

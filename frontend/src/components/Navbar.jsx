@@ -242,7 +242,7 @@ const Navbar = () => {
         scrolled ? "shadow-xl" : "shadow-md"
       }`}>
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-18">
             {/* Logo */}
             <Link to="/home" className="flex items-center gap-3 group" onClick={closeMobileMenu}>
               <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg border-2 border-[#0B2A4A]/10 group-hover:scale-105 transition-transform duration-300">
