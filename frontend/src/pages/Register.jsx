@@ -9,7 +9,7 @@ import {
   PhoneCall, MailOpen, Calendar, Facebook, Twitter, 
   Instagram, Linkedin, ChevronRight
 } from "lucide-react";
-import logo from '../assets/images/logo1.jpg';
+import logo from '../assets/images/logo1.png';
 
 // ===== NAVBAR COMPONENT (MERGED) =====
 const Navbar = () => {

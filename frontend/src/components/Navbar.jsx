@@ -36,7 +36,7 @@ import {
   Briefcase,
   Star,
 } from "lucide-react";
-import logo from "../assets/images/logo1.jpg";
+import logo from "../assets/images/logo1.png";
 import ApplicationSummary from "./ApplicationSummary"; // IMPORT Application Summary
 
 const Navbar = () => {

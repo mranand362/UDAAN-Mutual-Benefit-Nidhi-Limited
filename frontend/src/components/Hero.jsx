@@ -96,7 +96,8 @@ const Hero = () => {
       secondaryCta: "Contact Us",
       secondaryLink: "/contactus",
     },
-];
+  ];
+
   // Preload images
   useEffect(() => {
     slides.forEach((slide, index) => {
@@ -140,7 +141,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-[#0B2A4A]">
+    <section className="relative w-full min-h-[90vh] sm:min-h-[85vh] md:min-h-[90vh] lg:h-screen overflow-hidden bg-[#0B2A4A]">
       {/* Background Images */}
       {slides.map((slide, index) => (
         <div
@@ -158,14 +159,14 @@ const Hero = () => {
               transition: "transform 1s ease-out",
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B2A4A] via-[#0B2A4A]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B2A4A]/90 via-[#0B2A4A]/70 to-transparent" />
         </div>
       ))}
 
       {/* Content */}
-      <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-full flex items-center">
-          <div className="w-full lg:w-3/5">
+      <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-0">
+        <div className="flex items-center min-h-[70vh] sm:min-h-[75vh] md:min-h-[80vh] lg:h-screen">
+          <div className="w-full lg:w-3/5 xl:w-2/3">
             {slides.map((slide, index) => (
               <div
                 key={slide.id}
@@ -175,47 +176,42 @@ const Hero = () => {
                     : "opacity-0 -translate-x-8 hidden"
                 }`}
               >
-                {/* Badge */}
-                <div className="inline-flex items-center bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full mb-4">
-                  <span className="w-1.5 h-1.5 bg-[#FDB813] rounded-full mr-2"></span>
-                  <span className="text-[#FDB813] text-xs font-medium tracking-wider">
-                    {slide.badge}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">
+             
+                {/* Title - Responsive sizing */}
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-1 sm:mb-2 leading-tight">
                   {slide.title}
                 </h1>
 
                 {/* Highlight */}
-                <p className="text-base sm:text-lg text-[#FDB813] mb-3">{slide.highlight}</p>
+                <p className="text-sm sm:text-base md:text-lg text-[#FDB813] mb-2 sm:mb-3 font-medium">
+                  {slide.highlight}
+                </p>
 
-                {/* Description */}
-                <p className="text-sm sm:text-base text-gray-200 mb-6 max-w-lg">
+                {/* Description - Hidden on very small screens, shown on larger */}
+                <p className="hidden sm:block text-sm sm:text-base text-gray-200 mb-4 sm:mb-6 max-w-lg leading-relaxed">
                   {slide.description}
                 </p>
 
-                {/* Stats */}
-                <div className="flex flex-wrap gap-4 mb-6">
+                {/* Stats - Responsive grid */}
+              <div className="flex flex-wrap gap-2 sm:gap-4 mb-8 sm:mb-10">
                   {slide.stats.map((stat, idx) => (
-                    <div key={idx} className="flex items-center gap-1">
+                    <div key={idx} className="flex items-center gap-1 bg-white/5 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full">
                       <span className="text-[#FDB813]">{stat.icon}</span>
-                      <span className="text-white text-sm font-medium">{stat.value}</span>
-                      <span className="text-gray-300 text-xs ml-0.5">{stat.label}</span>
+                      <span className="text-white text-xs sm:text-sm font-bold">{stat.value}</span>
+                      <span className="text-gray-300 text-[10px] sm:text-xs">{stat.label}</span>
                     </div>
                   ))}
                 </div>
 
                 {/* Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 relative z-20">
+                <div className="flex flex-wrap gap-2 sm:gap-3 relative z-20">
                   <Link to={slide.ctaLink}>
-                    <button className="bg-[#FDB813] text-[#0B2A4A] px-6 py-3 rounded-lg font-medium text-sm hover:bg-white transition-colors">
+                    <button className="bg-[#FDB813] text-[#0B2A4A] px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl">
                       {slide.cta}
                     </button>
                   </Link>
                   <Link to={slide.secondaryLink}>
-                    <button className="border border-white/30 text-white px-6 py-3 rounded-lg font-medium text-sm hover:bg-white/10 transition-colors">
+                    <button className="border border-white/30 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm hover:bg-white/10 transition-all duration-300">
                       {slide.secondaryCta}
                     </button>
                   </Link>
@@ -226,57 +222,56 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - Hidden on mobile */}
       <button
         onClick={prevSlide}
-        className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 text-white rounded-full items-center justify-center hover:bg-black/50 transition-colors"
+        className="hidden md:flex absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 bg-black/30 backdrop-blur-sm text-white rounded-full items-center justify-center hover:bg-black/50 transition-all duration-300 z-20"
       >
-        <ChevronLeft className="w-5 h-5" />
+        <ChevronLeft className="w-4 h-4 lg:w-5 lg:h-5" />
       </button>
       <button
         onClick={nextSlide}
-        className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 text-white rounded-full items-center justify-center hover:bg-black/50 transition-colors"
+        className="hidden md:flex absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 bg-black/30 backdrop-blur-sm text-white rounded-full items-center justify-center hover:bg-black/50 transition-all duration-300 z-20"
       >
-        <ChevronRight className="w-5 h-5" />
+        <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5" />
       </button>
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-        {slides.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => {
-              setIsAutoPlaying(false);
-              setCurrentSlide(idx);
-            }}
-            className={`h-1.5 rounded-full transition-all ${
-              idx === currentSlide ? "w-6 bg-[#FDB813]" : "w-1.5 bg-white/50"
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Mobile Quick Contact */}
-      <div className="lg:hidden absolute bottom-0 left-0 right-0 bg-[#0B2A4A]/90 backdrop-blur-sm border-t border-white/10 py-2 px-4 z-20">
-        <div className="flex justify-around items-center">
-          <a href="tel:+917397782590" className="flex flex-col items-center">
-            <Phone className="w-4 h-4 text-[#FDB813]" />
-            <span className="text-[10px] text-white/80">Call</span>
+      {/* Mobile Quick Contact - Floating action bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0B2A4A]/95 backdrop-blur-md border-t border-white/10 py-1 px-4 z-30 shadow-lg">
+        <div className="flex justify-around items-center max-w-md mx-auto">
+          <a 
+            href="tel:+917397782590" 
+            className="flex flex-col items-center gap-1 group active:scale-95 transition-transform"
+          >
+            <div className="w-8 h-8 rounded-full bg-[#FDB813]/10 flex items-center justify-center group-hover:bg-[#FDB813]/20 transition-colors">
+              <Phone className="w-4 h-4 text-[#FDB813]" />
+            </div>
+            <span className="text-[10px] text-white/70">Call</span>
           </a>
-          <a href="mailto:info@jaynirmala.com" className="flex flex-col items-center">
-            <Mail className="w-4 h-4 text-[#FDB813]" />
-            <span className="text-[10px] text-white/80">Email</span>
+          <a 
+            href="mailto:info@jaynirmala.com" 
+            className="flex flex-col items-center gap-1 group active:scale-95 transition-transform"
+          >
+            <div className="w-8 h-8 rounded-full bg-[#FDB813]/10 flex items-center justify-center group-hover:bg-[#FDB813]/20 transition-colors">
+              <Mail className="w-4 h-4 text-[#FDB813]" />
+            </div>
+            <span className="text-[10px] text-white/70">Email</span>
           </a>
-          <a href="#" className="flex flex-col items-center">
-            <MapPin className="w-4 h-4 text-[#FDB813]" />
-            <span className="text-[10px] text-white/80">Location</span>
+          <a 
+            href="#" 
+            className="flex flex-col items-center gap-1 group active:scale-95 transition-transform"
+          >
+            <div className="w-8 h-8 rounded-full bg-[#FDB813]/10 flex items-center justify-center group-hover:bg-[#FDB813]/20 transition-colors">
+              <MapPin className="w-4 h-4 text-[#FDB813]" />
+            </div>
+            <span className="text-[10px] text-white/70">Branch</span>
           </a>
         </div>
       </div>
 
-      {/* Touch Handlers */}
+      {/* Touch Handlers for Swipe */}
       <div
-        className="absolute inset-0 lg:hidden pointer-events-none"
+        className="absolute inset-0 lg:hidden z-10"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -285,7 +280,7 @@ const Hero = () => {
       {/* Loading Indicator */}
       {!imagesLoaded[currentSlide] && (
         <div className="absolute inset-0 flex items-center justify-center bg-[#0B2A4A] z-50">
-          <div className="w-8 h-8 border-2 border-[#FDB813] border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-3 border-[#FDB813] border-t-transparent rounded-full animate-spin" />
         </div>
       )}
     </section>

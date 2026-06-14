@@ -27,7 +27,7 @@ import {
   LogOut,
   Clock,
 } from "lucide-react";
-import logo from "../assets/images/logo1.jpg";
+import logo from "../assets/images/logo1.png";
 
 // ===== NAVBAR COMPONENT =====
 const Navbar = () => {

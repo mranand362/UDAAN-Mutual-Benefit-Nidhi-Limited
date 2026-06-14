@@ -7,7 +7,7 @@ import {
   FaCcVisa, FaCcMastercard, FaLock
 } from "react-icons/fa";
 import { SiGooglepay, SiPhonepe } from "react-icons/si";
-import logo from "../assets/images/logo1.jpg";
+import logo from "../assets/images/logo1.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -48,25 +48,24 @@ const Footer = () => {
         
         {/* Top Section - Logo & Newsletter */}
         <div className="flex flex-col md:flex-row  border-b border-white/10 pb-4 mb-1">
-          <div className="flex items-center gap-3 mb-4 md:mb-0">
-            <img src={logo} alt="UDAAN Logo" className="h-12 w-auto object-contain" />
-            <div>
-              <h3 className="text-2xl font-bold">UDAAN</h3>
-              <p className="text-xs text-[#FDB813]">MUTUAL BENEFIT NIDHI LIMITED</p>
-            </div>
-          </div>
+       <div className="flex items-center gap-3 mb-4 md:mb-0">
+  <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg border-2 border-[#0B2A4A]/10">
+    <img
+      src={logo}
+      alt="UDAAN Logo"
+      className="w-full h-full object-cover"
+    />
+  </div>
+
+  <div>
+    <h3 className="text-2xl font-bold">UDAAN</h3>
+    <p className="text-xs text-[#FDB813]">
+      MUTUAL BENEFIT NIDHI LIMITED
+    </p>
+  </div>
+</div>
           
-          <div className="flex gap-4">
-            {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map((Icon, idx) => (
-              <a
-                key={idx}
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-[#FDB813] hover:text-[#0B2A4A] transition-all duration-300 hover:scale-110"
-              >
-                <Icon size={16} />
-              </a>
-            ))}
-          </div>
+          
         </div>
 
         {/* Two Column Layout */}
@@ -91,7 +90,7 @@ const Footer = () => {
                 <div className="flex items-start gap-3">
                   <FaMapMarkerAlt className="text-[#FDB813] mt-1 flex-shrink-0" size={14} />
                   <span className="text-gray-300 text-sm">
-                    No. 362/B, Kamarajar Street, Villupuram – 605602, Tamil Nadu
+                    No. 362/B,modinagar ghaziabad – 605602, NewDelhi NCR, India
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
