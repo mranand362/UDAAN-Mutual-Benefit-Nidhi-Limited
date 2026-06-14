@@ -1,0 +1,223 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Wallet, TrendingUp, Shield, Clock,
+  CheckCircle, ArrowRight, Sparkles, IndianRupee,
+  Users, CreditCard, Phone, Globe,
+  Download, Zap, Award, Heart, FileText, Umbrella
+} from "lucide-react";
+
+const LoanAgainstPolicy = () => {
+   const navigate = useNavigate();
+  const [policyType, setPolicyType] = useState("endowment");
+
+  const policyTypes = [
+    {
+      value: "endowment",
+      label: "Endowment Policy",
+      maxLTV: "90%",
+      interest: "9.5% p.a.",
+      tenure: "Up to policy term",
+      features: ["Retain policy benefits", "No medical exam", "Quick processing"]
+    },
+    {
+      value: "moneyback",
+      label: "Money-Back Policy",
+      maxLTV: "85%",
+      interest: "10% p.a.",
+      tenure: "Up to maturity",
+      features: ["Loan against surrender value", "Interest only on used amount", "Flexible repayment"]
+    },
+    {
+      value: "wholelife",
+      label: "Whole Life Policy",
+      maxLTV: "80%",
+      interest: "9.75% p.a.",
+      tenure: "5-10 years",
+      features: ["Higher loan amount", "Long tenure", "Nominee protection"]
+    },
+    {
+      value: "ulip",
+      label: "ULIP",
+      maxLTV: "70%",
+      interest: "10.5% p.a.",
+      tenure: "3-7 years",
+      features: ["Against fund value", "Market-linked benefits continue", "Partial withdrawal option"]
+    }
+  ];
+
+  const features = [
+    {
+      icon: <Umbrella className="w-5 h-5" />,
+      title: "Policy Continues",
+      desc: "Insurance cover remains active"
+    },
+    {
+      icon: <FileText className="w-5 h-5" />,
+      title: "Minimal Docs",
+      desc: "Only policy document required"
+    },
+    {
+      icon: <Zap className="w-5 h-5" />,
+      title: "Quick Disbursal",
+      desc: "Funds in 24 hours"
+    },
+    {
+      icon: <TrendingUp className="w-5 h-5" />,
+      title: "Competitive Rates",
+      desc: "Interest starting 9.5% p.a."
+    }
+  ];
+
+  const benefits = [
+    "No impact on policy bonuses",
+    "Loan up to 90% of surrender value",
+    "Repay in flexible installments",
+    "No prepayment penalties",
+    "Option to pay only interest",
+    "Tax benefits on original policy continue"
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-2 bg-[#FDB813]/10 px-4 py-2 rounded-full mb-4">
+            <Umbrella className="w-4 h-4 text-[#FDB813]" />
+            <span className="text-[#FDB813] font-medium text-sm">Unlock Your Policy's Value</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-bold text-[#0B2A4A] mb-3">Loan Against Policy</h1>
+          <p className="text-base sm:text-lg text-gray-600">
+            Get funds without surrendering your insurance policy
+          </p>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+          <div className="bg-white rounded-xl shadow-md p-4 text-center border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1">
+            <div className="text-2xl font-bold text-[#FDB813]">90%</div>
+            <div className="text-xs text-gray-500">of Surrender Value</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-md p-4 text-center border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1">
+            <div className="text-2xl font-bold text-[#FDB813]">9.5%</div>
+            <div className="text-xs text-gray-500">Interest p.a.</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-md p-4 text-center border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1">
+            <div className="text-2xl font-bold text-[#FDB813]">24 hrs</div>
+            <div className="text-xs text-gray-500">Disbursal</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-md p-4 text-center border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1">
+            <div className="text-2xl font-bold text-[#FDB813]">No</div>
+            <div className="text-xs text-gray-500">Medical Exam</div>
+          </div>
+        </div>
+
+        {/* Policy Types */}
+        <h2 className="text-2xl font-bold text-[#0B2A4A] mb-4">Choose Your Policy Type</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+          {policyTypes.map((type) => (
+            <label
+              key={type.value}
+              className={`relative p-5 border-2 rounded-xl cursor-pointer transition-all ${
+                policyType === type.value
+                  ? 'border-[#FDB813] bg-[#FDB813]/5 shadow-md'
+                  : 'border-gray-200 hover:border-[#FDB813]/50 bg-white'
+              }`}
+            >
+              <input
+                type="radio"
+                name="policyType"
+                value={type.value}
+                checked={policyType === type.value}
+                onChange={(e) => setPolicyType(e.target.value)}
+                className="absolute opacity-0"
+              />
+              <div>
+                <h3 className="font-bold text-[#0B2A4A] text-base mb-2">{type.label}</h3>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs text-gray-500">Max LTV</span>
+                  <span className="text-sm font-bold text-[#FDB813]">{type.maxLTV}</span>
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs text-gray-500">Interest</span>
+                  <span className="text-sm font-bold text-[#0B2A4A]">{type.interest}</span>
+                </div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs text-gray-500">Tenure</span>
+                  <span className="text-sm font-bold text-[#0B2A4A]">{type.tenure}</span>
+                </div>
+                <ul className="space-y-1">
+                  {type.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-1 text-[10px] text-gray-500">
+                      <CheckCircle className="w-3 h-3 text-[#FDB813] mt-0.5 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </label>
+          ))}
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+          {features.map((feature, idx) => (
+            <div key={idx} className="bg-white rounded-xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition-all group">
+              <div className="w-12 h-12 bg-[#FDB813]/10 rounded-lg flex items-center justify-center text-[#FDB813] mb-3 group-hover:bg-[#FDB813] group-hover:text-white transition-colors">
+                {feature.icon}
+              </div>
+              <h3 className="font-semibold text-[#0B2A4A] text-base mb-1">{feature.title}</h3>
+              <p className="text-xs text-gray-500">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Benefits & CTA */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-10">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+            <h3 className="text-lg font-bold text-[#0B2A4A] mb-4 flex items-center gap-2">
+              <Award className="w-5 h-5 text-[#FDB813]" />
+              Loan Benefits
+            </h3>
+            <ul className="space-y-2">
+              {benefits.map((benefit, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-[#FDB813] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-600 text-xs">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-gradient-to-r from-[#0B2A4A] to-[#1a3a5a] rounded-xl p-6 text-white">
+            <h3 className="text-lg font-bold mb-4">Apply for Loan Against Policy</h3>
+            <p className="text-sm text-gray-300 mb-4">Quick and hassle-free process</p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-8 h-8 bg-[#FDB813]/20 rounded-full flex items-center justify-center text-[#FDB813]">1</div>
+                <span>Submit policy details</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-8 h-8 bg-[#FDB813]/20 rounded-full flex items-center justify-center text-[#FDB813]">2</div>
+                <span>Get eligibility confirmed</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-8 h-8 bg-[#FDB813]/20 rounded-full flex items-center justify-center text-[#FDB813]">3</div>
+                <span>Receive loan amount</span>
+              </div>
+            </div>
+            <button
+             onClick={() => navigate("/apply")}
+              className="w-full mt-6 bg-[#FDB813] text-[#0B2A4A] py-3 rounded-lg font-medium hover:bg-white transition-all">
+              Apply Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoanAgainstPolicy;
