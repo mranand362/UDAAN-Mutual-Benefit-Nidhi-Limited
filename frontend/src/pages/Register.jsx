@@ -226,7 +226,7 @@ function Register() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/signup",
         {
           name,
           email,

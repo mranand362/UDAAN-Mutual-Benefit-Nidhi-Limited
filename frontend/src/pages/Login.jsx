@@ -434,7 +434,7 @@ const Login = () => {
 
     try {
       // Fixed: Use direct URL instead of process.env
-      const API_URL = "http://localhost:5000";
+      const API_URL = "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com";
       const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,

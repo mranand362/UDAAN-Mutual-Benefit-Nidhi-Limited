@@ -26,7 +26,7 @@ const MyApplications = () => {
         return;
       }
 
-      const response = await axios.get("http://localhost:5000/api/applications/my-applications", {
+      const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/applications/my-applications", {
         headers: { Authorization: `Bearer ${token}` }
       });
 

@@ -42,7 +42,7 @@ import {
 
 
 // ==================== CONFIGURATION ====================
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com";
 
 // ==================== STEPPER COMPONENT ====================
 const Stepper = ({ currentStep, steps }) => {

@@ -17,7 +17,7 @@ const ForgotPassword = () => {
     setError("");
     
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/forgot-password", { email });
+      const response = await axios.post("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/forgot-password", { email });
       if (response.data.success) {
         setSuccess(true);
       }

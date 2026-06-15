@@ -76,7 +76,7 @@ const Navbar = () => {
         
         // Try to get latest profile data from API
         try {
-          const response = await axios.get("http://localhost:5000/api/auth/profile", {
+          const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile", {
             headers: { Authorization: `Bearer ${token}` }
           });
           
@@ -128,7 +128,7 @@ const Navbar = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await axios.get("http://localhost:5000/api/applications/application-count", {
+          const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/applications/application-count", {
             headers: { Authorization: `Bearer ${token}` }
           });
           if (response.data.success) {

@@ -69,7 +69,7 @@ const Apply = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/applications/apply",
+        "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/applications/apply",
         {
           fullName: formData.fullName,
           email: formData.email,

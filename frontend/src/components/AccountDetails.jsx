@@ -32,7 +32,7 @@ import {
 } from 'lucide-react';
 import Navbar from './Navbar'; // IMPORT NAVBAR
 
-const API_BASE_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AccountDetails = () => {
   const [account, setAccount] = useState(null);

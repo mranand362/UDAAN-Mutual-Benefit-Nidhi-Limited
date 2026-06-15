@@ -91,7 +91,7 @@ const Settings = () => {
   const fetchSettings = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/auth/settings", {
+      const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/settings", {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -115,7 +115,7 @@ const Settings = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:5000/api/auth/profile",
+        "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
         {
           name: profile.name,
           phone: profile.phone,
@@ -156,7 +156,7 @@ const Settings = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:5000/api/auth/change-password",
+        "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/change-password",
         {
           currentPassword: passwordData.currentPassword,
           newPassword: passwordData.newPassword,
@@ -188,7 +188,7 @@ const Settings = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:5000/api/auth/notifications",
+        "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/notifications",
         notifications,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -212,7 +212,7 @@ const Settings = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:5000/api/auth/preferences",
+        "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/preferences",
         preferences,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -235,7 +235,7 @@ const Settings = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.delete(
-        "http://localhost:5000/api/auth/account",
+        "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/account",
         {
           data: { password: deletePassword },
           headers: { Authorization: `Bearer ${token}` }
