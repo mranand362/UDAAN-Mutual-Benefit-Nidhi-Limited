@@ -83,7 +83,7 @@ const MyProfile = () => {
       
       // Try to get from API first
       try {
-        const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile", {
+        const response = await axios.get("https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile", {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -140,7 +140,7 @@ const MyProfile = () => {
   const fetchUserStats = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/stats", {
+      const response = await axios.get("https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/stats", {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -161,7 +161,7 @@ const MyProfile = () => {
   const fetchTransactions = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/transactions", {
+      const response = await axios.get("https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/transactions", {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -205,7 +205,7 @@ const MyProfile = () => {
         const token = localStorage.getItem("token");
         try {
           await axios.put(
-            "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
+            "http://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
             { profileImage: base64Image },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -235,7 +235,7 @@ const MyProfile = () => {
       const token = localStorage.getItem("token");
       try {
         await axios.put(
-          "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
+          "https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
           { profileImage: "" },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -265,7 +265,7 @@ const MyProfile = () => {
       
       // Update via API
       const response = await axios.put(
-        "http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
+        "https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
         {
           name: profile.name,
           phone: profile.phone,

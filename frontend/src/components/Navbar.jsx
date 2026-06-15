@@ -76,7 +76,7 @@ const Navbar = () => {
         
         // Try to get latest profile data from API
         try {
-          const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile", {
+          const response = await axios.get("https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile", {
             headers: { Authorization: `Bearer ${token}` }
           });
           
@@ -128,7 +128,7 @@ const Navbar = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await axios.get("http://https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/applications/application-count", {
+          const response = await axios.get("https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/applications/application-count", {
             headers: { Authorization: `Bearer ${token}` }
           });
           if (response.data.success) {
@@ -242,7 +242,7 @@ const Navbar = () => {
         scrolled ? "shadow-xl" : "shadow-md"
       }`}>
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-18">
+          <div className="flex justify-between items-center  h-20">
             {/* Logo */}
             <Link to="/home" className="flex items-center gap-3 group" onClick={closeMobileMenu}>
               <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg border-2 border-[#0B2A4A]/10 group-hover:scale-105 transition-transform duration-300">
@@ -410,10 +410,10 @@ const Navbar = () => {
         {isOpen && (
           <div className="lg:hidden border-t border-gray-200 bg-white fixed top-20 left-0 right-0 bottom-0 overflow-y-auto z-40">
             <div className="container mx-auto px-4 py-4">
-              <div className="flex flex-col space-y-2">
+              <div className="flex flex-col space-y-1">
                 {/* Mobile Auth Card with Profile Image */}
                 {isLoggedIn ? (
-                  <div className="mb-4 p-4 bg-gradient-to-r from-[#0B2A4A] to-[#1a3a5a] rounded-xl text-white">
+                  <div className=" p-4 bg-gradient-to-r from-[#0B2A4A] to-[#1a3a5a] rounded-xl text-white">
                     <div className="flex items-center gap-3">
                       {/* Profile image in mobile menu */}
                       {profileImage ? (
@@ -436,7 +436,7 @@ const Navbar = () => {
                 ) : (
                   <Link 
                     to="/login" 
-                    className="mb-4 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-[#FDB813] to-[#fec84d] text-[#0B2A4A] rounded-lg font-semibold" 
+                    className=" flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-[#FDB813] to-[#fec84d] text-[#0B2A4A] rounded-lg font-semibold" 
                     onClick={closeMobileMenu}
                   >
                     <LogIn size={18} />

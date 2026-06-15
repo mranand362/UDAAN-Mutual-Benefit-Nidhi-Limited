@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
   ChevronRight,
@@ -22,6 +22,7 @@ const Hero = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState({});
+  const navigate = useNavigate();
 
   const slides = [
     {
@@ -83,7 +84,7 @@ const Hero = () => {
       image: slide4,
       badge: "TRUSTED & RELIABLE",
       title: "Our Commitment",
-      highlight: "We are truthful and trustworthy, that’s why we are best",
+      highlight: "We are truthful and trustworthy, that's why we are best",
       description:
         "Our commitment is to honesty, transparency, and best returns. Experience top-notch service and reliable financial solutions.",
       stats: [
@@ -97,6 +98,8 @@ const Hero = () => {
       secondaryLink: "/contactus",
     },
   ];
+
+  const currentSlideData = slides[currentSlide];
 
   // Preload images
   useEffect(() => {
@@ -128,6 +131,12 @@ const Hero = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
+  // Handle navigation
+  const handleNavigation = (path) => {
+    console.log("Navigating to:", path); // For debugging
+    navigate(path);
+  };
+
   // Touch handlers
   const handleTouchStart = (e) => setTouchStart(e.touches[0].clientX);
   const handleTouchMove = (e) => setTouchEnd(e.touches[0].clientX);
@@ -152,7 +161,7 @@ const Hero = () => {
         >
           <img
             src={slide.image}
-            alt=""
+            alt={slide.title}
             className="w-full h-full object-cover"
             style={{
               transform: `scale(${index === currentSlide ? 1.05 : 1})`,
@@ -163,80 +172,98 @@ const Hero = () => {
         </div>
       ))}
 
-      {/* Content */}
+      {/* Content - FIXED: Only render current slide content */}
       <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-0">
         <div className="flex items-center min-h-[70vh] sm:min-h-[75vh] md:min-h-[80vh] lg:h-screen">
           <div className="w-full lg:w-3/5 xl:w-2/3">
-            {slides.map((slide, index) => (
-              <div
-                key={slide.id}
-                className={`transition-all duration-700 ${
-                  index === currentSlide
-                    ? "opacity-100 translate-x-0 block"
-                    : "opacity-0 -translate-x-8 hidden"
-                }`}
+            {/* Badge */}
+            <div className="inline-block bg-[#FDB813]/20 backdrop-blur-sm px-3 py-1 rounded-full mb-3 sm:mb-4">
+              <span className="text-[#FDB813] text-xs sm:text-sm font-semibold tracking-wider">
+                {currentSlideData.badge}
+              </span>
+            </div>
+
+            {/* Title */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-1 sm:mb-2 leading-tight">
+              {currentSlideData.title}
+            </h1>
+
+            {/* Highlight */}
+            <p className="text-sm sm:text-base md:text-lg text-[#FDB813] mb-2 sm:mb-3 font-medium">
+              {currentSlideData.highlight}
+            </p>
+
+            {/* Description */}
+            <p className="hidden sm:block text-sm sm:text-base text-gray-200 mb-4 sm:mb-6 max-w-lg leading-relaxed">
+              {currentSlideData.description}
+            </p>
+
+            {/* Stats */}
+            <div className="flex flex-wrap gap-2 sm:gap-4 mb-8 sm:mb-10">
+              {currentSlideData.stats.map((stat, idx) => (
+                <div key={idx} className="flex items-center gap-1 bg-white/5 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full">
+                  <span className="text-[#FDB813]">{stat.icon}</span>
+                  <span className="text-white text-xs sm:text-sm font-bold">{stat.value}</span>
+                  <span className="text-gray-300 text-[10px] sm:text-xs">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Buttons - FIXED: Using onClick handlers instead of Link */}
+            <div className="flex flex-wrap gap-2 sm:gap-3 relative z-20">
+              <button
+                onClick={() => handleNavigation(currentSlideData.ctaLink)}
+                className="bg-[#FDB813] text-[#0B2A4A] px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
               >
-             
-                {/* Title - Responsive sizing */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-1 sm:mb-2 leading-tight">
-                  {slide.title}
-                </h1>
-
-                {/* Highlight */}
-                <p className="text-sm sm:text-base md:text-lg text-[#FDB813] mb-2 sm:mb-3 font-medium">
-                  {slide.highlight}
-                </p>
-
-                {/* Description - Hidden on very small screens, shown on larger */}
-                <p className="hidden sm:block text-sm sm:text-base text-gray-200 mb-4 sm:mb-6 max-w-lg leading-relaxed">
-                  {slide.description}
-                </p>
-
-                {/* Stats - Responsive grid */}
-              <div className="flex flex-wrap gap-2 sm:gap-4 mb-8 sm:mb-10">
-                  {slide.stats.map((stat, idx) => (
-                    <div key={idx} className="flex items-center gap-1 bg-white/5 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full">
-                      <span className="text-[#FDB813]">{stat.icon}</span>
-                      <span className="text-white text-xs sm:text-sm font-bold">{stat.value}</span>
-                      <span className="text-gray-300 text-[10px] sm:text-xs">{stat.label}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Buttons */}
-                <div className="flex flex-wrap gap-2 sm:gap-3 relative z-20">
-                  <Link to={slide.ctaLink}>
-                    <button className="bg-[#FDB813] text-[#0B2A4A] px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl">
-                      {slide.cta}
-                    </button>
-                  </Link>
-                  <Link to={slide.secondaryLink}>
-                    <button className="border border-white/30 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm hover:bg-white/10 transition-all duration-300">
-                      {slide.secondaryCta}
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            ))}
+                {currentSlideData.cta}
+              </button>
+              <button
+                onClick={() => handleNavigation(currentSlideData.secondaryLink)}
+                className="border border-white/30 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm hover:bg-white/10 transition-all duration-300 cursor-pointer"
+              >
+                {currentSlideData.secondaryCta}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Arrows - Hidden on mobile */}
+      {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="hidden md:flex absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 bg-black/30 backdrop-blur-sm text-white rounded-full items-center justify-center hover:bg-black/50 transition-all duration-300 z-20"
+        className="hidden md:flex absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 bg-black/30 backdrop-blur-sm text-white rounded-full items-center justify-center hover:bg-black/50 transition-all duration-300 z-20 cursor-pointer"
+        aria-label="Previous slide"
       >
         <ChevronLeft className="w-4 h-4 lg:w-5 lg:h-5" />
       </button>
       <button
         onClick={nextSlide}
-        className="hidden md:flex absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 bg-black/30 backdrop-blur-sm text-white rounded-full items-center justify-center hover:bg-black/50 transition-all duration-300 z-20"
+        className="hidden md:flex absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 w-8 h-8 lg:w-10 lg:h-10 bg-black/30 backdrop-blur-sm text-white rounded-full items-center justify-center hover:bg-black/50 transition-all duration-300 z-20 cursor-pointer"
+        aria-label="Next slide"
       >
         <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5" />
       </button>
 
-      {/* Mobile Quick Contact - Floating action bar */}
+      {/* Slide Indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              setIsAutoPlaying(false);
+              setCurrentSlide(index);
+            }}
+            className={`transition-all duration-300 cursor-pointer ${
+              index === currentSlide
+                ? "w-8 h-2 bg-[#FDB813] rounded-full"
+                : "w-2 h-2 bg-white/50 rounded-full hover:bg-white/75"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Mobile Quick Contact */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0B2A4A]/95 backdrop-blur-md border-t border-white/10 py-1 px-4 z-30 shadow-lg">
         <div className="flex justify-around items-center max-w-md mx-auto">
           <a 
@@ -249,7 +276,7 @@ const Hero = () => {
             <span className="text-[10px] text-white/70">Call</span>
           </a>
           <a 
-            href="mailto:info@jaynirmala.com" 
+            href="mailto:info@udaannidhi.in" 
             className="flex flex-col items-center gap-1 group active:scale-95 transition-transform"
           >
             <div className="w-8 h-8 rounded-full bg-[#FDB813]/10 flex items-center justify-center group-hover:bg-[#FDB813]/20 transition-colors">
@@ -257,15 +284,15 @@ const Hero = () => {
             </div>
             <span className="text-[10px] text-white/70">Email</span>
           </a>
-          <a 
-            href="#" 
+          <Link 
+            to="/contactus" 
             className="flex flex-col items-center gap-1 group active:scale-95 transition-transform"
           >
             <div className="w-8 h-8 rounded-full bg-[#FDB813]/10 flex items-center justify-center group-hover:bg-[#FDB813]/20 transition-colors">
               <MapPin className="w-4 h-4 text-[#FDB813]" />
             </div>
             <span className="text-[10px] text-white/70">Branch</span>
-          </a>
+          </Link>
         </div>
       </div>
 

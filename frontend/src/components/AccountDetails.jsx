@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 import {
   User,
   Mail,
@@ -54,7 +55,7 @@ const AccountDetails = () => {
         return;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/api/accounts/my-account`, {
+      const response = await axios.get(`${API_BASE_URL}/accounts/my-account`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
