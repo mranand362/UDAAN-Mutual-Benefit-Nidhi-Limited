@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import http from "http";
+import https from "https";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -68,7 +68,7 @@ app.use("/api/support", supportRoutes);
 app.use("/api/accounts", accountRoutes);
 
 // Create HTTP Server
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 // WebSocket Initialization
 initializeWebSocketServer(server);
