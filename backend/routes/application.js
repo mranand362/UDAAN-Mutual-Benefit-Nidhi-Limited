@@ -65,7 +65,7 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-// ==================== NEW: OPEN ACCOUNT ENDPOINT ====================
+// ==================== OPEN ACCOUNT ENDPOINT ====================
 router.post("/open-account", verifyToken, upload.fields([
   { name: "aadhaarFront", maxCount: 1 },
   { name: "aadhaarBack", maxCount: 1 },
@@ -183,9 +183,13 @@ router.post("/open-account", verifyToken, upload.fields([
   }
 });
 
-// Submit Deposit Application
+// ==================== DEPOSIT APPLY - FIXED ====================
 router.post("/deposit-apply", verifyToken, async (req, res) => {
   try {
+    console.log("📥 Deposit apply request received");
+    console.log("Body:", JSON.stringify(req.body, null, 2));
+    console.log("User ID:", req.userId);
+    
     const {
       fullName, email, phone, dob, address, city, state, pincode,
       panNumber, aadhaarNumber, occupation, annualIncome,
@@ -194,44 +198,93 @@ router.post("/deposit-apply", verifyToken, async (req, res) => {
       calculatedInterest
     } = req.body;
 
-    const application = new Application({
+    // CHECK REQUIRED FIELDS
+    const requiredFields = ['fullName', 'email', 'phone', 'depositType', 'depositAmount', 'tenure'];
+    const missingFields = requiredFields.filter(field => !req.body[field]);
+    
+    if (missingFields.length > 0) {
+      console.log("❌ Missing fields:", missingFields);
+      return res.status(400).json({ 
+        success: false, 
+        message: `Missing required fields: ${missingFields.join(", ")}`
+      });
+    }
+
+    // ✅ FIX: Ensure depositType is valid (default to "fixed" if empty)
+    const validDepositTypes = ["fixed", "recurring", "daily", "taxsaver", "cumulative", "noncumulative", "savings"];
+    const finalDepositType = depositType && validDepositTypes.includes(depositType) ? depositType : "fixed";
+
+    // ✅ FIX: Ensure tenure is a valid number
+    const finalTenure = parseInt(tenure) || 12;
+    const finalAmount = parseFloat(depositAmount) || 0;
+
+    console.log(`✅ Deposit Type: ${finalDepositType}, Tenure: ${finalTenure}, Amount: ${finalAmount}`);
+
+    // CREATE APPLICATION WITH SAFE DEFAULTS
+    const applicationData = {
       userId: req.userId,
       type: "deposit",
-      depositType: depositType,
-      amount: depositAmount,
-      tenure: parseInt(tenure),
+      depositType: finalDepositType,
+      amount: finalAmount,
+      tenure: finalTenure,
       status: "pending",
       personalInfo: {
-        fullName,
-        email,
-        phone,
-        dob,
-        address,
-        city,
-        state,
-        pincode,
-        panNumber,
-        aadhaarNumber,
+        fullName: fullName || "",
+        email: email || "",
+        phone: phone || "",
+        alternatePhone: "",
+        dob: dob || "",
+        gender: "",
+        address: address || "",
+        city: city || "",
+        state: state || "",
+        pincode: pincode || "",
+        panNumber: panNumber || "",
+        aadhaarNumber: aadhaarNumber || "",
       },
       employmentInfo: {
-        occupation,
-        annualIncome,
+        occupation: occupation || "",
+        annualIncome: annualIncome || "",
+        employmentType: "",
+        monthlyIncome: 0,
       },
       depositInfo: {
-        depositType,
-        payoutOption,
-        interestRate: calculatedInterest?.rate,
-        interestEarned: calculatedInterest?.interest,
-        maturityAmount: calculatedInterest?.maturityAmount,
+        depositType: finalDepositType,
+        payoutOption: payoutOption || "maturity",
+        interestRate: calculatedInterest?.rate || 0,
+        interestEarned: calculatedInterest?.interest || 0,
+        maturityAmount: calculatedInterest?.maturityAmount || 0,
+        initialDeposit: finalAmount,
+        sourceOfFunds: "",
       },
       nomineeInfo: {
-        name: nominationName,
-        relation: nominationRelation,
-        age: nominationAge,
+        name: nominationName || "",
+        relation: nominationRelation || "",
+        age: nominationAge || "",
+        guardianName: "",
       },
-    });
+      referralCode: "",
+      preferences: {
+        agreeToSms: false,
+        agreeToEmail: false,
+        agreedToTerms: false,
+      },
+      documents: {
+        aadhaarFront: "",
+        aadhaarBack: "",
+        panCard: "",
+        photo: "",
+        signature: "",
+        addressProof: "",
+      },
+      submittedAt: new Date(),
+    };
 
+    console.log("📝 Creating application with data");
+    const application = new Application(applicationData);
     await application.save();
+    
+    console.log("✅ Application saved successfully, ID:", application._id);
 
     res.status(201).json({
       success: true,
@@ -242,13 +295,33 @@ router.post("/deposit-apply", verifyToken, async (req, res) => {
         createdAt: application.createdAt,
       },
     });
+
   } catch (error) {
-    console.error("Deposit application error:", error);
-    res.status(500).json({ message: "Failed to submit application" });
+    console.error("❌ ERROR:", error);
+    console.error("Error name:", error.name);
+    console.error("Error message:", error.message);
+    
+    if (error.name === 'ValidationError') {
+      const errors = {};
+      for (let field in error.errors) {
+        errors[field] = error.errors[field].message;
+      }
+      return res.status(400).json({ 
+        success: false, 
+        message: "Validation failed",
+        errors: errors
+      });
+    }
+    
+    res.status(500).json({ 
+      success: false, 
+      message: "Server error: " + error.message,
+      error: error.message 
+    });
   }
 });
 
-// Submit new application
+// ==================== APPLY LOAN ====================
 router.post("/apply", verifyToken, async (req, res) => {
   try {
     const {
@@ -295,7 +368,7 @@ router.post("/apply", verifyToken, async (req, res) => {
   }
 });
 
-// Get user's all applications
+// ==================== GET MY APPLICATIONS ====================
 router.get("/my-applications", verifyToken, async (req, res) => {
   try {
     const applications = await Application.find({ userId: req.userId })
@@ -322,7 +395,7 @@ router.get("/my-applications", verifyToken, async (req, res) => {
   }
 });
 
-// Get application count for navbar
+// ==================== GET APPLICATION COUNT ====================
 router.get("/application-count", verifyToken, async (req, res) => {
   try {
     const pendingCount = await Application.countDocuments({ 
@@ -342,7 +415,7 @@ router.get("/application-count", verifyToken, async (req, res) => {
   }
 });
 
-// Get single application details
+// ==================== GET SINGLE APPLICATION ====================
 router.get("/application/:id", verifyToken, async (req, res) => {
   try {
     const application = await Application.findOne({

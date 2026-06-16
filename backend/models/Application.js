@@ -105,4 +105,5 @@ const applicationSchema = new mongoose.Schema({
   },
 });
 
+// ✅ FIXED: Correct model export
 export default mongoose.model("Application", applicationSchema);
