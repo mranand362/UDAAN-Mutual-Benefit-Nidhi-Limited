@@ -188,7 +188,7 @@ const AccountDetails = () => {
           <div className="mb-6">
             <div className="flex justify-between items-center flex-wrap gap-4 mb-4">
               <div>
-                <h1 className="text-2xl font-bold text-[#0B2A4A]">Account Application Details</h1>
+                
                 <p className="text-gray-500 text-sm mt-1">View your submitted account application status and information</p>
               </div>
               <button

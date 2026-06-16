@@ -121,15 +121,15 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [isAutoPlaying, slides.length]);
 
-  const nextSlide = useCallback(() => {
-    setIsAutoPlaying(false);
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  }, [slides.length]);
+const nextSlide = () => {
+  setIsAutoPlaying(false);
+  setCurrentSlide((prev) => (prev + 1) % slides.length);
+};
 
-  const prevSlide = useCallback(() => {
-    setIsAutoPlaying(false);
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  }, [slides.length]);
+const prevSlide = () => {
+  setIsAutoPlaying(false);
+  setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+};
 
   // Handle navigation
   const handleNavigation = (path) => {
@@ -150,7 +150,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-full min-h-[90vh] sm:min-h-[85vh] md:min-h-[90vh] lg:h-screen overflow-hidden bg-[#0B2A4A]">
+   <section className="relative w-full min-h-[65vh] sm:min-h-[75vh] md:min-h-[90vh] lg:h-screen overflow-hidden bg-[#0B2A4A]">
       {/* Background Images */}
       {slides.map((slide, index) => (
         <div
@@ -174,7 +174,7 @@ const Hero = () => {
 
       {/* Content - FIXED: Only render current slide content */}
       <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-0">
-        <div className="flex items-center min-h-[70vh] sm:min-h-[75vh] md:min-h-[80vh] lg:h-screen">
+        <div className="flex items-center min-h-[61.5vh] sm:min-h-[70vh] md:min-h-[80vh] lg:h-screen">
           <div className="w-full lg:w-3/5 xl:w-2/3">
             {/* Badge */}
             <div className="inline-block bg-[#FDB813]/20 backdrop-blur-sm px-3 py-1 rounded-full mb-3 sm:mb-4">
@@ -245,7 +245,7 @@ const Hero = () => {
       </button>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+      <div className=" hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -253,11 +253,11 @@ const Hero = () => {
               setIsAutoPlaying(false);
               setCurrentSlide(index);
             }}
-            className={`transition-all duration-300 cursor-pointer ${
-              index === currentSlide
-                ? "w-8 h-2 bg-[#FDB813] rounded-full"
-                : "w-2 h-2 bg-white/50 rounded-full hover:bg-white/75"
-            }`}
+     className={`transition-all duration-300 cursor-pointer ${
+  index === currentSlide
+    ? "w-2 h-0.5 md:w-8 md:h-2 bg-[#FDB813] rounded-full"
+    : "w-0.5 h-0.5 md:w-2 md:h-2 bg-white/50 rounded-full"
+}`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
