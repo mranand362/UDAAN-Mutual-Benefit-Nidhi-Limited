@@ -174,7 +174,7 @@ const prevSlide = () => {
 
       {/* Content - FIXED: Only render current slide content */}
       <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-0">
-        <div className="flex items-center min-h-[63vh] sm:min-h-[70vh] md:min-h-[80vh] lg:h-screen">
+        <div className="flex items-center min-h-[65vh] sm:min-h-[70vh] md:min-h-[80vh] lg:h-screen">
           <div className="w-full lg:w-3/5 xl:w-2/3">
             {/* Badge */}
             <div className="inline-block bg-[#FDB813]/20 backdrop-blur-sm px-3 py-1 rounded-full mb-3 sm:mb-4">

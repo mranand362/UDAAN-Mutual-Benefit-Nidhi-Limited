@@ -23,8 +23,6 @@ import {
   HandCoins,
   ChevronRight,
   Trash2,
-  Calendar,
-  Award,
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -54,7 +52,7 @@ const MyProfile = () => {
     profileImage: "",
   });
 
-  // Account Statistics (will come from API)
+  // Account Statistics
   const [stats, setStats] = useState({
     totalDeposits: 0,
     activeLoans: 0,
@@ -62,7 +60,7 @@ const MyProfile = () => {
     memberSince: "",
   });
 
-  // Recent Transactions (will come from API)
+  // Recent Transactions
   const [recentTransactions, setRecentTransactions] = useState([]);
 
   // Check authentication and load user data
@@ -77,13 +75,15 @@ const MyProfile = () => {
     fetchTransactions();
   }, [navigate]);
 
+  // ============================================
+  // ✅ FETCH PROFILE - RELATIVE URL
+  // ============================================
   const fetchUserProfile = async () => {
     try {
       const token = localStorage.getItem("token");
       
-      // Try to get from API first
       try {
-        const response = await axios.get("https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile", {
+        const response = await axios.get('/api/auth/profile', {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -102,7 +102,6 @@ const MyProfile = () => {
             profileImage: response.data.user.profileImage || "",
           });
           
-          // Update localStorage
           localStorage.setItem("userName", response.data.user.name);
           localStorage.setItem("userEmail", response.data.user.email);
           if (response.data.user.profileImage) {
@@ -137,10 +136,13 @@ const MyProfile = () => {
     }
   };
 
+  // ============================================
+  // ✅ FETCH STATS - RELATIVE URL
+  // ============================================
   const fetchUserStats = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/stats", {
+      const response = await axios.get('/api/auth/stats', {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -153,15 +155,17 @@ const MyProfile = () => {
         });
       }
     } catch (error) {
-      // Stats API may not exist yet, use default values
       console.log("Stats API not available yet");
     }
   };
 
+  // ============================================
+  // ✅ FETCH TRANSACTIONS - RELATIVE URL
+  // ============================================
   const fetchTransactions = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/transactions", {
+      const response = await axios.get('/api/auth/transactions', {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -169,12 +173,13 @@ const MyProfile = () => {
         setRecentTransactions(response.data.transactions);
       }
     } catch (error) {
-      // Transactions API may not exist yet
       console.log("Transactions API not available yet");
     }
   };
 
-  // Handle profile image upload
+  // ============================================
+  // ✅ HANDLE IMAGE UPLOAD - LocalStorage First
+  // ============================================
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -194,27 +199,13 @@ const MyProfile = () => {
 
     try {
       const reader = new FileReader();
-      reader.onloadend = async () => {
+      reader.onloadend = () => {
         const base64Image = reader.result;
         
-        // Save to localStorage immediately for UI update
+        // Save to localStorage immediately
         localStorage.setItem("profileImage", base64Image);
         setProfile(prev => ({ ...prev, profileImage: base64Image }));
-        
-        // Also save to backend API
-        const token = localStorage.getItem("token");
-        try {
-          await axios.put(
-            "https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
-            { profileImage: base64Image },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          setSuccessMessage("Profile picture updated successfully!");
-        } catch (apiError) {
-          console.log("API save failed, but saved locally:", apiError);
-          setSuccessMessage("Profile picture saved locally!");
-        }
-        
+        setSuccessMessage("Profile picture updated!");
         setTimeout(() => setSuccessMessage(""), 3000);
       };
       reader.readAsDataURL(file);
@@ -226,24 +217,14 @@ const MyProfile = () => {
     }
   };
 
-  // Remove profile image
+  // ============================================
+  // ✅ HANDLE REMOVE IMAGE - LocalStorage First
+  // ============================================
   const handleRemoveImage = async () => {
     try {
       localStorage.removeItem("profileImage");
       setProfile(prev => ({ ...prev, profileImage: "" }));
-      
-      const token = localStorage.getItem("token");
-      try {
-        await axios.put(
-          "https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
-          { profileImage: "" },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        setSuccessMessage("Profile picture removed");
-      } catch (apiError) {
-        setSuccessMessage("Profile picture removed locally");
-      }
-      
+      setSuccessMessage("Profile picture removed");
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
       console.error("Error removing image:", err);
@@ -251,6 +232,9 @@ const MyProfile = () => {
     }
   };
 
+  // ============================================
+  // ✅ HANDLE UPDATE PROFILE - LocalStorage First
+  // ============================================
   const handleUpdateProfile = async (e) => {
     if (e) e.preventDefault();
     setSaving(true);
@@ -258,37 +242,39 @@ const MyProfile = () => {
     setSuccessMessage("");
 
     try {
-      const token = localStorage.getItem("token");
-      
-      // Update localStorage
+      // Save to localStorage first
       localStorage.setItem("userName", profile.name);
       
-      // Update via API
-      const response = await axios.put(
-        "https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
-        {
-          name: profile.name,
-          phone: profile.phone,
-          address: profile.address,
-          city: profile.city,
-          state: profile.state,
-          pincode: profile.pincode,
-          occupation: profile.occupation,
-          panCard: profile.panCard,
-          aadharCard: profile.aadharCard,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      
-      if (response.data.success) {
+      // Try API call
+      try {
+        const token = localStorage.getItem("token");
+        await axios.put(
+          '/api/auth/profile',
+          {
+            name: profile.name,
+            phone: profile.phone,
+            address: profile.address,
+            city: profile.city,
+            state: profile.state,
+            pincode: profile.pincode,
+            occupation: profile.occupation,
+            panCard: profile.panCard,
+            aadharCard: profile.aadharCard,
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         setSuccessMessage("Profile updated successfully!");
+      } catch (apiError) {
+        // API may not be available, but we saved locally
+        console.log("API update failed, but saved locally:", apiError.message);
+        setSuccessMessage("Profile saved locally!");
       }
       
       setIsEditing(false);
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       console.error("Error updating profile:", error);
-      setErrorMessage(error.response?.data?.message || "Failed to update profile");
+      setErrorMessage("Failed to update profile");
     } finally {
       setSaving(false);
     }
@@ -743,7 +729,6 @@ const MyProfile = () => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };

@@ -125,7 +125,7 @@ function App() {
 
         {/* ================= CONTACT (PUBLIC) ================= */}
         <Route path="/contactus" element={<><Navbar /><Contact /></>} />
-        <Route path="/account" element={<><Navbar /><OpenAccountForm /></>} />
+        <Route path="/open-account" element={<><Navbar /><OpenAccountForm /></>} />
 
         {/* ================= GALLERY (PUBLIC) ================= */}
         <Route path="/gallery" element={<><Navbar /><Gallery /></>} />

@@ -189,7 +189,7 @@ const ApplyDeposits = () => {
       }
 
       const response = await axios.post(
-        "https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/applications/deposit-apply",
+        '/api/applications/deposit-apply',
         {
           ...formData,
           applicationType: "deposit",

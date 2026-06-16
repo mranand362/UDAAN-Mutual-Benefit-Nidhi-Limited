@@ -38,7 +38,7 @@ const ApplicationSummary = () => {
     }
 
     try {
-    const response = await axios.get(`${API_URL}/applications/my-applications`, {
+    const response = await axios.get('/api/applications/my-applications', {
         headers: { Authorization: `Bearer ${token}` }
       });
       

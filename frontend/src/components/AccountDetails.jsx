@@ -55,9 +55,9 @@ const AccountDetails = () => {
         return;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/accounts/my-account`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.get('/api/accounts/my-account', {
+  headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+});
 
       if (response.data.success) {
         if (response.data.hasAccount) {
