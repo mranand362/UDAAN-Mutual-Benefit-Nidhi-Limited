@@ -263,7 +263,7 @@ const ApplyDeposits = () => {
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#0B2A4A] mb-3">Open a Deposit Account</h1>
             <p className="text-base sm:text-lg text-gray-600">
-              Start your savings journey with JAYNIRMALA MUTUAL BENEFIT NIDHI LIMITED
+              Start your savings journey with UDAAN MUTUAL BENEFIT NIDHI LIMITED
             </p>
           </div>
 

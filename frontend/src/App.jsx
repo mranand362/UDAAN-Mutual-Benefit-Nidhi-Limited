@@ -15,7 +15,7 @@ import Team from "./components/Team";
 import Footer from "./components/Footer";
 import Loan from "./components/Loan";
 import Gallery from "./components/Gallery";
-import ChatWidget from "./components/ChatWidget"; // ✅ IMPORT CHAT WIDGET
+import ChatWidget from "./components/ChatWidget";
 
 // Pages
 import Company from "./pages/Company";
@@ -43,6 +43,8 @@ import MyApplications from "./pages/MyApplications";
 import OpenAccountForm from "./pages/OpenAccountForm";
 import HelpSupport from "./pages/HelpSupport";
 import AccountDetails from './components/AccountDetails';
+import ApplicationDetails from './components/ApplicationDetails'; // ✅ NEW
+import ApplicationSummary from "./components/ApplicationSummary";
 
 // Auth Pages
 import Login from "./pages/Login";
@@ -63,7 +65,6 @@ import MyProfile from "./pages/MyProfile";
 function App() {
   return (
     <Router>
-      {/* Routes without ChatWidget - ChatWidget will be added outside Routes */}
       <Routes>
         {/* ================= HOME PAGE (PUBLIC) ================= */}
         <Route
@@ -117,7 +118,11 @@ function App() {
         <Route path="/loan" element={<><Navbar /><Loan /></>} />
         <Route path="/Invest" element={<><Navbar /><InvestNow /></>} />
         <Route path="/applications" element={<MyApplications />} />
-        <Route path="/application/:id" element={<AccountDetails />} />
+        
+        {/* ✅ FIXED: Application Details Route */}
+        <Route path="/application/:id" element={<ApplicationDetails />} />
+        
+        <Route path="/application-summary/:id" element={<ApplicationSummary />} />
 
         {/* ================= TOOLS (PUBLIC) ================= */}
         <Route path="/calculator" element={<><Navbar /><Calculator /></>} />
@@ -139,6 +144,7 @@ function App() {
         <Route path="/disclaimer" element={<><Navbar /><Disclaimer /></>} />
         <Route path="/faq" element={<><Navbar /><FAQ /></>} />
         <Route path="/sitemap" element={<><Navbar /><Sitemap /></>} />
+        
         {/* ================= PROTECTED ROUTES (LOGIN REQUIRED) ================= */}
 
         {/* User Profile */}

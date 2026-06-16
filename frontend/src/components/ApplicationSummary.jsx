@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-const API_URL = import.meta.env.VITE_API_URL;
 import axios from "axios";
 import { 
   FileText, Clock, CheckCircle, AlertCircle, Eye, 
   Wallet, User, MapPin, Calendar, IndianRupee, Shield 
 } from "lucide-react";
+
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const ApplicationSummary = () => {
   const [applications, setApplications] = useState([]);
@@ -38,7 +39,8 @@ const ApplicationSummary = () => {
     }
 
     try {
-    const response = await axios.get('/api/applications/my-applications', {
+      // ✅ RELATIVE URL - PROXY USE KAREGA
+      const response = await axios.get(`/api/applications/my-applications`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -86,7 +88,7 @@ const ApplicationSummary = () => {
       case "savings-account": return "Savings Account";
       case "deposit": return "Deposit";
       case "loan": return "Loan";
-      default: return type;
+      default: return type || "Application";
     }
   };
 
@@ -186,7 +188,7 @@ const ApplicationSummary = () => {
                         )}
                       </div>
                       
-                      {/* Personal Info Summary (for savings account) */}
+                      {/* Personal Info Summary */}
                       {app.type === "savings-account" && app.personalInfo && (
                         <div className="text-xs text-gray-500 mt-1">
                           <span className="flex items-center gap-1">
