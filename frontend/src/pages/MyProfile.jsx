@@ -205,7 +205,7 @@ const MyProfile = () => {
         const token = localStorage.getItem("token");
         try {
           await axios.put(
-            "http://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
+            "https://udaan-mutual-benefit-nidhi-limited.onrender.com/api/auth/profile",
             { profileImage: base64Image },
             { headers: { Authorization: `Bearer ${token}` } }
           );
