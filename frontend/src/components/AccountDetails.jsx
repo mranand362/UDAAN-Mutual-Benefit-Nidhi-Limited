@@ -153,7 +153,7 @@ const AccountDetails = () => {
               <h2 className="text-xl font-semibold text-gray-800 mb-2">No Account Found</h2>
               <p className="text-gray-600 mb-6">{error}</p>
               <Link
-                to="/open-account"
+                to="/account"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FDB813] to-[#fec84d] text-[#0B2A4A] rounded-lg font-semibold hover:shadow-lg transition-all"
               >
                 Open Account Now
