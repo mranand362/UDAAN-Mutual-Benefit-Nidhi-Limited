@@ -72,7 +72,7 @@ const Apply = () => {
 
       // ✅ FIXED: Using API_URL
       const response = await axios.post(
-        `${API_URL}/applications/apply`,
+        `${API_URL}/api/applications/apply`,
         {
           fullName: formData.fullName,
           email: formData.email,

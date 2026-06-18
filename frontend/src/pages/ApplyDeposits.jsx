@@ -192,7 +192,7 @@ const ApplyDeposits = () => {
 
       // ✅ FIXED: Using API_URL
       const response = await axios.post(
-        `${API_URL}/applications/deposit-apply`,
+        `${API_URL}/api/applications/deposit-apply`,
         {
           ...formData,
           applicationType: "deposit",

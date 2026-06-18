@@ -29,10 +29,10 @@ const MyApplications = () => {
         return;
       }
 
-      // ✅ FIXED: Using API_URL
-      const response = await axios.get(`${API_URL}/applications/my-applications`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+    // ✅ NEW (SAHI)
+const response = await axios.get(`${API_URL}/api/applications/my-applications`, {
+  headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+});
 
       if (response.data.success) {
         setApplications(response.data.applications);
