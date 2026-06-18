@@ -23,57 +23,12 @@ const __dirname = path.dirname(__filename);
 // DNS Configuration
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
-// ==================== CORS FIX ====================
-const allowedOrigins = [
-  "https://udaan-nidhi-bank.vercel.app",
-  "https://udaan-mutual-benefit-nidhi-limited-8rqurupgj.vercel.app",  // ✅ PREVIEW URL ADDED
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "http://localhost:5000"
-];
-
-// CORS middleware - must be first
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  
-  // Allow requests with no origin (like mobile apps or curl requests)
-  if (!origin) {
-    return next();
-  }
-  
-  // Check if the origin is allowed
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept");
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Max-Age", "86400");
-  }
-  
-  // Handle preflight requests
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-  
-  next();
-});
-
-// Also use the cors package as backup
+// ==================== CORS FIX - ALLOW ALL ====================
+// ✅ Temporary fix - allow all origins for testing
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log('❌ Blocked origin:', origin);
-      callback(null, false);
-    }
-  },
-  credentials: true,
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-  optionsSuccessStatus: 200,
-  preflightContinue: false
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 }));
 
 // Body parser middleware
@@ -138,5 +93,5 @@ const PORT = process.env.PORT || 5000;
 // Start Server
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`✅ CORS enabled for: ${allowedOrigins.join(', ')}`);
+  console.log(`✅ CORS enabled for ALL origins (testing mode)`);
 });
