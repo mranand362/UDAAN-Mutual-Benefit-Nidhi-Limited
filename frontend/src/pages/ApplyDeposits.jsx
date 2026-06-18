@@ -9,6 +9,8 @@ import {
   HelpCircle, ChevronRight, Download, AlertCircle
 } from "lucide-react";
 
+// ✅ API_URL directly defined
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const ApplyDeposits = () => {
   const navigate = useNavigate();
@@ -188,8 +190,9 @@ const ApplyDeposits = () => {
         return;
       }
 
+      // ✅ FIXED: Using API_URL
       const response = await axios.post(
-        '/api/applications/deposit-apply',
+        `${API_URL}/applications/deposit-apply`,
         {
           ...formData,
           applicationType: "deposit",
@@ -227,7 +230,6 @@ const ApplyDeposits = () => {
   if (isSuccess) {
     return (
       <>
-        
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -245,7 +247,6 @@ const ApplyDeposits = () => {
             </button>
           </div>
         </div>
-        
       </>
     );
   }
@@ -854,7 +855,6 @@ const ApplyDeposits = () => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };

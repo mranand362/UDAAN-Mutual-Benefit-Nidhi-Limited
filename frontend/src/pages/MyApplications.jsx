@@ -6,7 +6,10 @@ import {
   Loader, IndianRupee, Calendar, Eye
 } from "lucide-react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
+
+// ✅ API_URL directly defined
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const MyApplications = () => {
   const navigate = useNavigate();
@@ -26,9 +29,10 @@ const MyApplications = () => {
         return;
       }
 
-      const response = await axios.get('/api/applications/my-applications', {
-  headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-});
+      // ✅ FIXED: Using API_URL
+      const response = await axios.get(`${API_URL}/applications/my-applications`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
 
       if (response.data.success) {
         setApplications(response.data.applications);
@@ -82,7 +86,7 @@ const MyApplications = () => {
             <p className="text-gray-600">Loading applications...</p>
           </div>
         </div>
-        <Footer />
+       
       </>
     );
   }
@@ -93,8 +97,6 @@ const MyApplications = () => {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
         <div className="container mx-auto max-w-6xl">
           
-          
-
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-700 text-sm">{error}</p>
@@ -149,12 +151,12 @@ const MyApplications = () => {
                       </div>
                     </div>
                     <button
-  onClick={() => navigate(`/application/${app.id}`)}
-  className="flex items-center gap-2 px-4 py-2 border border-[#FDB813] text-[#0B2A4A] rounded-lg hover:bg-[#FDB813] transition-all text-sm"
->
-  <Eye size={16} />
-  View Details
-</button>
+                      onClick={() => navigate(`/application/${app.id}`)}
+                      className="flex items-center gap-2 px-4 py-2 border border-[#FDB813] text-[#0B2A4A] rounded-lg hover:bg-[#FDB813] transition-all text-sm"
+                    >
+                      <Eye size={16} />
+                      View Details
+                    </button>
                   </div>
                 </div>
               ))}
@@ -162,7 +164,7 @@ const MyApplications = () => {
           )}
         </div>
       </div>
-     
+      
     </>
   );
 };

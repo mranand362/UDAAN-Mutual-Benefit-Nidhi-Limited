@@ -131,6 +131,7 @@ function App() {
         {/* ================= CONTACT (PUBLIC) ================= */}
         <Route path="/contactus" element={<><Navbar /><Contact /></>} />
         <Route path="/open-account" element={<><Navbar /><OpenAccountForm /></>} />
+        <Route path="/apply-loan" element={<><Navbar /><OpenAccountForm /></>} />
 
         {/* ================= GALLERY (PUBLIC) ================= */}
         <Route path="/gallery" element={<><Navbar /><Gallery /></>} />

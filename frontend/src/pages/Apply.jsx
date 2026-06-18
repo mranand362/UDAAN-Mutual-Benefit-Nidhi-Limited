@@ -7,6 +7,8 @@ import {
   Briefcase, Landmark, Sparkles, Shield, AlertCircle
 } from "lucide-react";
 
+// ✅ API_URL directly defined
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const Apply = () => {
   const navigate = useNavigate();
@@ -68,8 +70,9 @@ const Apply = () => {
         return;
       }
 
+      // ✅ FIXED: Using API_URL
       const response = await axios.post(
-        "/api/applications/apply",
+        `${API_URL}/applications/apply`,
         {
           fullName: formData.fullName,
           email: formData.email,
@@ -90,7 +93,6 @@ const Apply = () => {
 
       if (response.data.success) {
         setIsSuccess(true);
-        // FIXED: Redirect to My Applications page instead of profile
         setTimeout(() => {
           setIsSuccess(false);
           setCurrentStep(1);
@@ -108,7 +110,6 @@ const Apply = () => {
             tenure: "",
             agreeTerms: false
           });
-          // Redirect to My Applications page
           navigate("/applications");
         }, 2000);
       }
@@ -125,7 +126,6 @@ const Apply = () => {
 
   return (
     <>
-    
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 sm:py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -490,7 +490,6 @@ const Apply = () => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };
