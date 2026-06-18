@@ -26,6 +26,7 @@ dns.setServers(["1.1.1.1", "8.8.8.8"]);
 // ==================== CORS FIX ====================
 const allowedOrigins = [
   "https://udaan-nidhi-bank.vercel.app",
+  "https://udaan-mutual-benefit-nidhi-limited-8rqurupgj.vercel.app",  // ✅ PREVIEW URL ADDED
   "http://localhost:5173",
   "http://localhost:3000",
   "http://localhost:5000"
@@ -64,7 +65,7 @@ app.use(cors({
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      console.log('Blocked origin:', origin);
+      console.log('❌ Blocked origin:', origin);
       callback(null, false);
     }
   },
